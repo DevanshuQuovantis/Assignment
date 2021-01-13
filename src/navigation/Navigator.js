@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 
 function Navigator() {
   return (
-    <Stack.Navigator headerMode={'none'}>
+    <Stack.Navigator headerMode={'none'} initialRouteName="Homescreen">
       <Stack.Screen name="Homescreen" component={Homescreen} />
       <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
     </Stack.Navigator>
