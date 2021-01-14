@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import Colors from '../../../constants/Theme';
 
 export default {
@@ -22,19 +23,17 @@ export default {
   },
   playPauseContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     height: 60,
-    width: 120,
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 30,
     backgroundColor: Colors.darkBlue,
   },
   playContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 60,
-    width: 60,
     padding: 10,
     borderRadius: 30,
     backgroundColor: Colors.darkBlue,
@@ -44,7 +43,7 @@ export default {
   back: {color: Colors.snow, fontSize: 18, paddingLeft: 10, marginBottom: 2},
   headerContainer: {
     justifyContent: 'flex-end',
-    height: 80,
+    height: Platform.OS === 'android' ? 50 : 80,
     padding: 10,
     backgroundColor: Colors.blue,
   },

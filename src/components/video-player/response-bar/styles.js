@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import Colors from '../../../constants/Theme';
 
 export default {
@@ -24,7 +25,7 @@ export default {
   backIcon: {color: Colors.snow, fontSize: 22},
   headerContainer: {
     justifyContent: 'flex-end',
-    height: 80,
+    height: Platform.OS === 'android' ? 50 : 80,
     padding: 10,
   },
   textContainer: {

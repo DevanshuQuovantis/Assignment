@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, Pressable} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {View, Text, TouchableOpacity, Pressable, Animated} from 'react-native';
 import {Icon} from 'native-base';
 import {ControlBarTypes} from './index';
 import styles from './styles';
@@ -7,6 +7,7 @@ import styles from './styles';
 const ControlBar = (props) => {
   const {
     isPause,
+    showControls,
     handleVideoPlayerTouch,
     handleResponseOptions,
     handlePlayPause,
@@ -15,6 +16,47 @@ const ControlBar = (props) => {
   } = props;
 
   const [pause, setPause] = useState(isPause || false);
+
+  // to control animations for control bar, header & play pause button
+  const headerAnimation = useRef(new Animated.Value(-100)).current;
+  const controlBarAnimation = useRef(new Animated.Value(100)).current;
+  const playPauseButtonAnim = useRef(new Animated.Value(120)).current;
+
+  // starting animation of control bar & header
+  const startAnimation = () => {
+    Animated.parallel([
+      Animated.timing(headerAnimation, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(controlBarAnimation, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
+  // hiding animation of control bar & header
+  const hideAnimation = () => {
+    Animated.parallel([
+      Animated.timing(headerAnimation, {
+        toValue: -100,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(controlBarAnimation, {
+        toValue: 100,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
+  useEffect(() => {
+    showControls ? startAnimation() : hideAnimation();
+  }, [showControls]);
 
   /**
    * handling back button event.
@@ -25,8 +67,19 @@ const ControlBar = (props) => {
     navigation.goBack();
   };
 
-  // controlling video player to play pause
+  // controlling video player to play pause with its animation
   const handlePlayPauseTouch = () => {
+    pause
+      ? Animated.timing(playPauseButtonAnim, {
+          toValue: 120,
+          duration: 200,
+          useNativeDriver: false,
+        }).start()
+      : Animated.timing(playPauseButtonAnim, {
+          toValue: 60,
+          duration: 200,
+          useNativeDriver: false,
+        }).start();
     handlePlayPause(!pause);
     setPause(!pause);
   };
@@ -39,18 +92,36 @@ const ControlBar = (props) => {
     handlePlayPauseTouch();
     handleResponseOptions();
   };
+
+  const transformStyleHeader = {
+    transform: [
+      {
+        translateY: headerAnimation,
+      },
+    ],
+  };
+
+  const transformStyleControlBar = {
+    transform: [
+      {
+        translateY: controlBarAnimation,
+      },
+    ],
+  };
+
   return (
     <View style={{flex: 1}}>
-      <View style={styles.headerContainer}>
+      <Animated.View style={[styles.headerContainer, transformStyleHeader]}>
         <TouchableOpacity style={styles.headerView} onPress={handleBackButton}>
           <Icon type="AntDesign" name="left" style={styles.backIcon} />
           <Text style={styles.back}>Back</Text>
         </TouchableOpacity>
-      </View>
+      </Animated.View>
 
       <Pressable style={{flex: 1}} onPress={handleVideoPlayerTouch} />
 
-      <View style={styles.videoControlContainer}>
+      <Animated.View
+        style={[styles.videoControlContainer, transformStyleControlBar]}>
         <View style={styles.controlView}>
           <TouchableOpacity
             onPress={() => handleSeek(ControlBarTypes.SEEK_FORWARD)}
@@ -62,36 +133,48 @@ const ControlBar = (props) => {
             />
           </TouchableOpacity>
 
-          {pause ? (
-            <View style={styles.playContainer}>
+          <Animated.View
+            style={[
+              styles.playPauseContainer,
+              {
+                width: playPauseButtonAnim,
+              },
+            ]}>
+            {pause ? (
               <TouchableOpacity
                 onPress={handlePlayPauseTouch}
                 style={{justifyContent: 'center', alignItems: 'center'}}>
                 <Icon
                   type="Entypo"
                   name="controller-play"
-                  style={[styles.controlIcon, {marginLeft: 3}]}
+                  style={[styles.controlIcon, {marginLeft: 4}]}
                 />
               </TouchableOpacity>
-            </View>
-          ) : (
-            <View style={styles.playPauseContainer}>
-              <TouchableOpacity onPress={handlePlayPauseTouch}>
-                <Icon
-                  type="AntDesign"
-                  name="pause"
-                  style={styles.controlIcon}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleStop}>
-                <Icon
-                  type="Entypo"
-                  name="controller-stop"
-                  style={styles.controlIcon}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
+            ) : (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flex: 1,
+                }}>
+                <TouchableOpacity onPress={handlePlayPauseTouch}>
+                  <Icon
+                    type="AntDesign"
+                    name="pause"
+                    style={styles.controlIcon}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleStop}>
+                  <Icon
+                    type="Entypo"
+                    name="controller-stop"
+                    style={styles.controlIcon}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          </Animated.View>
 
           <TouchableOpacity
             onPress={() => handleSeek(ControlBarTypes.SEEK_BACKWARD)}
@@ -103,7 +186,7 @@ const ControlBar = (props) => {
             />
           </TouchableOpacity>
         </View>
-      </View>
+      </Animated.View>
     </View>
   );
 };
