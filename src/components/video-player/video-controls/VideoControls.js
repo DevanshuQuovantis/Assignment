@@ -1,19 +1,20 @@
-import React, {useEffect} from 'react';
-import {View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import React from 'react';
 import Modal from 'react-native-modal';
 import Colors from '../../../constants/Theme';
+import {ControlBar, ResponseBar} from '../index';
 import styles from './styles';
 
 const VideoControls = (props) => {
-  const {showControls} = props;
+  const {showControls, showResponse} = props;
 
   return (
-    <Modal isVisible={showControls} style={{margin: 0, flex: 1}}>
-      <View style={{flex: 1}}>
-        <View style={{flex: 0.9}} />
-        <View style={{flex: 0.1, backgroundColor: Colors.blue}}></View>
-      </View>
+    <Modal
+      animationIn="fadeIn"
+      animationOut="fadeOut"
+      isVisible={showControls}
+      style={styles.modalContainer}
+      backdropColor={Colors.backdrop}>
+      {showResponse ? <ResponseBar {...props} /> : <ControlBar {...props} />}
     </Modal>
   );
 };

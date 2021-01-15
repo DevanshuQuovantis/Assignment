@@ -1,5 +1,5 @@
+import Colors from '../../../constants/Theme';
+
 export default {
-  container: {
-    flex: 1,
-  },
+  modalContainer: {margin: 0, flex: 1},
 };
