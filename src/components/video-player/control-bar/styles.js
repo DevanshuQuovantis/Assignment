@@ -7,8 +7,7 @@ export default {
   },
   modalContainer: {margin: 0, flex: 1},
   videoControlContainer: {
-    height: 120,
-    paddingHorizontal: 10,
+    height: 140,
     backgroundColor: Colors.blue,
   },
   controlView: {
@@ -16,6 +15,8 @@ export default {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 10,
+    marginBottom: 20,
   },
   seekControl: {
     flex: 0.4,
@@ -48,4 +49,15 @@ export default {
     backgroundColor: Colors.blue,
   },
   headerView: {flexDirection: 'row', alignItems: 'center'},
+  durationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+    paddingHorizontal: 10,
+    marginBottom: 0,
+  },
+  duration: {
+    color: Colors.snow,
+  },
 };

@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {View, Text, TouchableOpacity, Pressable, Animated} from 'react-native';
+import Slider from 'react-native-slider';
 import {Icon} from 'native-base';
 import {ControlBarTypes} from './index';
 import styles from './styles';
@@ -8,6 +9,7 @@ const ControlBar = (props) => {
   const {
     isPause,
     showControls,
+    videoData,
     handleVideoPlayerTouch,
     handleResponseOptions,
     handlePlayPause,
@@ -20,7 +22,9 @@ const ControlBar = (props) => {
   // to control animations for control bar, header & play pause button
   const headerAnimation = useRef(new Animated.Value(-100)).current;
   const controlBarAnimation = useRef(new Animated.Value(100)).current;
-  const playPauseButtonAnim = useRef(new Animated.Value(120)).current;
+  const playPauseButtonAnim = useRef(new Animated.Value(isPause ? 60 : 120))
+    .current;
+  const [videoTotalDuration, setVideoTotalDuration] = useState(null);
 
   // starting animation of control bar & header
   const startAnimation = () => {
@@ -53,6 +57,13 @@ const ControlBar = (props) => {
       }),
     ]).start();
   };
+
+  /**
+   *
+   */
+  useEffect(() => {
+    setVideoTotalDuration(videoData.totalDuration);
+  }, []);
 
   useEffect(() => {
     showControls ? startAnimation() : hideAnimation();
@@ -109,6 +120,13 @@ const ControlBar = (props) => {
     ],
   };
 
+  const presentDurationInMinutes = (videoData.presentDuration / 60)
+    ?.toFixed(2)
+    .replace('.', ':');
+  const totalDurationInMinutes = (videoTotalDuration / 60)
+    ?.toFixed(2)
+    .replace('.', ':');
+
   return (
     <View style={{flex: 1}}>
       <Animated.View style={[styles.headerContainer, transformStyleHeader]}>
@@ -122,6 +140,22 @@ const ControlBar = (props) => {
 
       <Animated.View
         style={[styles.videoControlContainer, transformStyleControlBar]}>
+        <Slider
+          disabled={true}
+          animateTransitions={true}
+          animationType={'timing'}
+          animationConfig={{useNativeDriver: false}}
+          value={videoData?.presentDuration}
+          maximumValue={videoTotalDuration}
+          minimumValue={0}
+          style={{height: 0}}
+          trackStyle={{height: 2}}
+          thumbStyle={{height: 10, width: 10}}
+        />
+        <View style={styles.durationContainer}>
+          <Text style={styles.duration}>{presentDurationInMinutes}</Text>
+          <Text style={styles.duration}>{totalDurationInMinutes}</Text>
+        </View>
         <View style={styles.controlView}>
           <TouchableOpacity
             onPress={() => handleSeek(ControlBarTypes.SEEK_FORWARD)}
