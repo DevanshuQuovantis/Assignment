@@ -58,6 +58,10 @@ const VideoPlayer = ({navigation}) => {
       }
       case ControlBarTypes.SEEK_BACKWARD: {
         videoPlayerRef.current.seek(videoData.presentDuration - 10);
+        setVideoData({
+          ...videoData,
+          presentDuration: videoData.presentDuration - 10,
+        });
         return;
       }
       default:
@@ -98,6 +102,7 @@ const VideoPlayer = ({navigation}) => {
       />
       <VideoControls
         showControls={showControls}
+        videoData={videoData}
         showResponse={showResponse}
         isPause={pause}
         handleSeek={handleSeek}
