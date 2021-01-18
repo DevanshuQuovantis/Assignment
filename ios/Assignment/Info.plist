@@ -41,6 +41,15 @@
 	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+<key>NSCameraUsageDescription</key>
+<string>To capture images</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>To access camera roll</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>To access camera roll</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>To capture videos</string>
+
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
