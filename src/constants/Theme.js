@@ -4,4 +4,6 @@ export default {
   blue: '#4557b2',
   darkBlue: '#012f82',
   backdrop: '#6a6c6e',
+  green: '#21c680',
+  red: '#fe0001',
 };

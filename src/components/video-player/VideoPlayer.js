@@ -74,11 +74,15 @@ const VideoPlayer = ({navigation}) => {
    * by navigating to its respective screen
    */
   const handleUserSelectedResponseOption = (type) => {
+    setShowControls(false);
+    setShowResponse(false);
     switch (type) {
       case ResponseOptionTypes.VIDEO_RESPONSE_OPTION: {
+        navigation.navigate('Camera');
         return;
       }
       case ResponseOptionTypes.AUDIO_RESPONSE_OPTION: {
+        navigation.navigate('AudioRecorder');
         return;
       }
       case ResponseOptionTypes.TEXT_RESPONSE_OPTION: {
