@@ -1,10 +1,11 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View} from 'react-native';
+import {View, StatusBar, Platform} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import Realm from 'realm';
 import {Button} from '../common';
 import {getData} from '../../utils/RealmOperations';
 import UserResponse from '../../schema/UserResponse';
+import Colors from '../../constants/Theme';
 import styles from './styles';
 let realm;
 
@@ -20,6 +21,7 @@ const Homescreen = (props) => {
       path: 'UserResponse.realm',
       schema: [UserResponse],
     });
+    Platform.OS === 'android' && StatusBar.setBackgroundColor(Colors.blue);
   }, []);
 
   /**

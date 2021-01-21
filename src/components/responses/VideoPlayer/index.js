@@ -46,7 +46,7 @@ const VideoPlayer = ({item: {createdDate, response}}) => {
       orientation,
     } = response.naturalSize;
     if (orientation === 'landscape') {
-      setDimensions({height: 200, width: '100%'});
+      setDimensions({height: 180, width: '100%'});
     } else {
       setDimensions({height: 300, width: '100%'});
     }

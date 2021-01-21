@@ -10,7 +10,7 @@ export default {
   headerContainer: {
     flexDirection: 'row',
     alignItems: Platform.OS === 'android' ? 'center' : 'flex-end',
-    height: Platform.OS === 'android' ? 50 : 80,
+    height: Platform.OS === 'android' ? 40 : 80,
     padding: 10,
     backgroundColor: Colors.blue,
   },

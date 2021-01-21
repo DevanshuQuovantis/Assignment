@@ -4,7 +4,6 @@ import Colors from '../../constants/Theme';
 
 const Button = (props) => {
   const {buttonTitle, getTouchableEvent} = props;
-
   return (
     <TouchableOpacity style={styles.button} onPress={getTouchableEvent}>
       <Text style={styles.buttonTitle}>{buttonTitle}</Text>
