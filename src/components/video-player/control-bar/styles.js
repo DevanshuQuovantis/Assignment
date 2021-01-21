@@ -44,7 +44,7 @@ export default {
   back: {color: Colors.snow, fontSize: 18, paddingLeft: 10, marginBottom: 2},
   headerContainer: {
     justifyContent: 'flex-end',
-    height: Platform.OS === 'android' ? 50 : 80,
+    height: Platform.OS === 'android' ? 40 : 80,
     padding: 10,
     backgroundColor: Colors.blue,
   },

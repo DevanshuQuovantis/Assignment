@@ -30,7 +30,7 @@ const ControlBar = (props) => {
   const startAnimation = () => {
     Animated.parallel([
       Animated.timing(headerAnimation, {
-        toValue: 1,
+        toValue: 0,
         duration: 500,
         useNativeDriver: true,
       }),

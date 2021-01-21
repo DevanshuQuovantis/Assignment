@@ -1,7 +1,8 @@
 import React, {useRef, useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, Animated} from 'react-native';
+import {View, Text, TouchableOpacity, Animated, Platform} from 'react-native';
 import {Icon} from 'native-base';
 import Video from 'react-native-video';
+import RNFS from 'react-native-fs';
 import styles from '../styles';
 
 const AudioPlayer = ({item: {createdDate, response}}) => {
@@ -31,23 +32,25 @@ const AudioPlayer = ({item: {createdDate, response}}) => {
   };
 
   // storing video progress
-  const handleVideoProgress = ({
-    currentTime,
-    playableDuration,
-    seekableDuration,
-  }) => {
+  const handleVideoProgress = ({currentTime, seekableDuration}) => {
     setVideoData({
       totalDuration: seekableDuration,
       presentDuration: currentTime,
     });
   };
   const savedAt = new Date(createdDate).toLocaleString();
-  const presentDurationInMinutes = (videoData.presentDuration / 60)
+
+  presentDurationInMinutes = (videoData.presentDuration / 60)
     ?.toFixed(2)
     .replace('.', ':');
-  const totalDurationInMinutes = (videoData.totalDuration / 60)
+  totalDurationInMinutes = (videoData.totalDuration / 60)
     ?.toFixed(2)
     .replace('.', ':');
+
+  const source =
+    Platform.OS === 'android'
+      ? `file"///${response}`
+      : RNFS.CachesDirectoryPath + '/' + response;
   return (
     <View style={styles.responseContainer}>
       <Text style={styles.savedAt}>Saved At: {savedAt}</Text>
@@ -56,21 +59,11 @@ const AudioPlayer = ({item: {createdDate, response}}) => {
         <Video
           audioOnly={true}
           ref={audioPlayerRef}
-          source={{uri: 'file:///' + response}}
+          source={{uri: source}}
           paused={!isAudioPlaying}
           onProgress={handleVideoProgress}
           repeat={true}
         />
-        {/* <Video
-          audioOnly={true}
-          ref={audioPlayerRef}
-          source={{uri: 'file:///' + response}}
-          resizeMode="cover"
-          paused={!isAudioPlaying}
-          onProgress={handleVideoProgress}
-          repeat={true}
-          style={{marginBottom: 20}}
-        /> */}
         <View style={styles.progressView}>
           {!isAudioPlaying ? (
             <TouchableOpacity onPress={handlePlayPauseTouch}>

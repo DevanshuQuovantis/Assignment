@@ -25,7 +25,7 @@ export default {
   backIcon: {color: Colors.snow, fontSize: 22},
   headerContainer: {
     justifyContent: 'flex-end',
-    height: Platform.OS === 'android' ? 50 : 80,
+    height: Platform.OS === 'android' ? 40 : 80,
     padding: 10,
   },
   textContainer: {
