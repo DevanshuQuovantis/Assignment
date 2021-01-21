@@ -185,13 +185,7 @@ const ControlBar = (props) => {
                 />
               </TouchableOpacity>
             ) : (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  flex: 1,
-                }}>
+              <View style={styles.controlContainer}>
                 <TouchableOpacity onPress={handlePlayPauseTouch}>
                   <Icon
                     type="AntDesign"

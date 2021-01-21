@@ -31,7 +31,6 @@ const Homescreen = (props) => {
     React.useCallback(() => {
       (async () => {
         const userResponse = await getData();
-        console.log(userResponse);
         setUserResponse(userResponse);
       })();
     }, []),
@@ -43,7 +42,11 @@ const Homescreen = (props) => {
   };
 
   // handling user responses navigation
-  const handleUserResponse = () => {};
+  const handleUserResponse = () => {
+    navigation.navigate('Responses', {
+      userResponses: JSON.stringify(userResponses),
+    });
+  };
 
   return (
     <View style={styles.container}>

@@ -42,9 +42,9 @@ const VideoPlayer = ({navigation}) => {
   };
 
   // storing video progress
-  const handleVideoProgress = ({currentTime, playableDuration}) => {
+  const handleVideoProgress = ({currentTime, seekableDuration}) => {
     setVideoData({
-      totalDuration: playableDuration,
+      totalDuration: seekableDuration,
       presentDuration: currentTime,
     });
   };
@@ -86,6 +86,7 @@ const VideoPlayer = ({navigation}) => {
         return;
       }
       case ResponseOptionTypes.TEXT_RESPONSE_OPTION: {
+        navigation.navigate('TextInputResponse');
         return;
       }
       default:

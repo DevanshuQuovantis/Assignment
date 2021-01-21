@@ -42,12 +42,12 @@ export default {
   },
   rippleText: {
     color: Colors.snow,
-    top: -160,
+    top: -157,
     alignSelf: 'center',
   },
   headingContainer: {flex: 0.15, justifyContent: 'center'},
   buttonHeading: {
-    flex: 0.5,
+    flex: 0.7,
     paddingTop: 20,
     justifyContent: 'space-between',
   },
