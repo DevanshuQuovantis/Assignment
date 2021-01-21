@@ -60,4 +60,10 @@ export default {
   duration: {
     color: Colors.snow,
   },
+  controlContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flex: 1,
+  },
 };

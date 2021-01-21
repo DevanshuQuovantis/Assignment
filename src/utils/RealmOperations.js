@@ -8,7 +8,7 @@ export const addToDb = (data, responseId) => {
   realm.write(() => {
     realm.create('user_response', {
       responseId: responseId,
-      responseType: ResponseOptionTypes.VIDEO_RESPONSE_OPTION,
+      responseType: data.responseType,
       response: data.uri,
       createdDate: new Date(),
     });
