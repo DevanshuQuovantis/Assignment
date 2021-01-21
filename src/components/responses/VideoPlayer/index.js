@@ -38,6 +38,20 @@ const VideoPlayer = ({item: {createdDate, response}}) => {
     });
   };
 
+  // handling video dimensions according to video's orientation
+  const handleVideoDimensions = (response) => {
+    const {
+      width: videoWidth,
+      height: videoHeight,
+      orientation,
+    } = response.naturalSize;
+    if (orientation === 'landscape') {
+      setDimensions({height: 200, width: '100%'});
+    } else {
+      setDimensions({height: 300, width: '100%'});
+    }
+  };
+
   const savedAt = new Date(createdDate).toLocaleString();
 
   const presentDurationInMinutes = (videoData.presentDuration / 60)
@@ -61,18 +75,7 @@ const VideoPlayer = ({item: {createdDate, response}}) => {
           style={dimensions}
           onProgress={handleVideoProgress}
           repeat={true}
-          onLoad={(response) => {
-            const {
-              width: videoWidth,
-              height: videoHeight,
-              orientation,
-            } = response.naturalSize;
-            if (orientation === 'landscape') {
-              setDimensions({height: 200, width: '100%'});
-            } else {
-              setDimensions({height: 300, width: '100%'});
-            }
-          }}
+          onLoad={handleVideoDimensions}
         />
 
         <View style={styles.progressView}>
